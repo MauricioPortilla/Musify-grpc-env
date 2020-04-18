@@ -13,6 +13,7 @@ class MusifyClient:
         status = "success" if response.length == os.path.getsize(filepath) else "failure"
         print(json.dumps({"status": status, "name": response.name}))
 
-    def download(self, songFilename, songQuality, destinationPath):
-        response = self.stub.download(MusifyService.SongRequest(name=songFilename, quality=songQuality))
-        lib.saveChunksToFile(response, destinationPath)
+    def download(self, songFilename, songQuality):
+        # response = self.stub.download(MusifyService.SongRequest(name=songFilename, quality=songQuality))
+        # lib.saveChunksToFile(response, destinationPath)
+        return self.stub.download(MusifyService.SongRequest(name=songFilename, quality=songQuality))
