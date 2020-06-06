@@ -2,13 +2,17 @@ package Musify.components;
 
 import java.io.File;
 
+/**
+ * Song quality converter executor.
+ */
 public class SongQualityMain {
 
-    private static final String LOW_QUALITY_SONGS_FOLDER = "/home/vagrant/Musify/storage/songs/lowquality/";
-    private static final String MEDIUM_QUALITY_SONGS_FOLDER = "/home/vagrant/Musify/storage/songs/mediumquality/";
+    // Directories accord to Musify gRPC Server file (musify_service_server.py) execution location.
+    private static final String LOW_QUALITY_SONGS_FOLDER = System.getProperty("user.dir") + "/../../storage/songs/lowquality/";
+    private static final String MEDIUM_QUALITY_SONGS_FOLDER = System.getProperty("user.dir") + "/../../storage/songs/mediumquality/";
 
     public static void main(String[] args) {
-        if (args[0] == null) {
+        if (args.length == 0) {
             System.out.println("No source file.");
             return;
         }

@@ -10,8 +10,6 @@ import it.sauronsoftware.jave.EncodingAttributes;
  * Converts song file quality.
  */
 public class SongQualityConverter {
-    private static final Integer lowBitrate = 128000; // Minimal bitrate
-    private static final Integer mediumBitrate = 256000; // Medium bitrate
     private static final Integer channels = 2; // 2 for stereo, 1 for mono
     private static final Integer samplingRate = 44100; // For good quality.
 
@@ -32,16 +30,17 @@ public class SongQualityConverter {
         AudioAttributes audioAttributes = new AudioAttributes();
         EncodingAttributes encoderAttributes = new EncodingAttributes();
         Encoder encoder = new Encoder();
-        if (withLowQuality) {
-            audioAttributes.setBitRate(lowBitrate);
-        } else {
-            audioAttributes.setBitRate(mediumBitrate);
-        }
-        audioAttributes.setChannels(channels);
-        audioAttributes.setSamplingRate(samplingRate);
-        encoderAttributes.setAudioAttributes(audioAttributes);
-        encoderAttributes.setFormat("mp3");
         try {
+            int sourceBitrate = encoder.getInfo(source).getAudio().getBitRate();
+            if (withLowQuality) {
+                audioAttributes.setBitRate(sourceBitrate / 3);
+            } else {
+                audioAttributes.setBitRate(sourceBitrate / 2);
+            }
+            audioAttributes.setChannels(channels);
+            audioAttributes.setSamplingRate(samplingRate);
+            encoderAttributes.setAudioAttributes(audioAttributes);
+            encoderAttributes.setFormat("mp3");
             encoder.encode(source, target, encoderAttributes);
         } catch (EncoderException encoderException) {
             System.out.println("Encoding Failed -> " + encoderException.getMessage());
