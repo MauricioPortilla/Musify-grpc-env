@@ -55,3 +55,4 @@ test/vagrant-spec/boxes/*.box
 
 # Server storage
 /Musify/storage/*
+/Musify/components/*.class
